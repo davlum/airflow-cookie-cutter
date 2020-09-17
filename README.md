@@ -1,3 +1,5 @@
+`pipenv install` to install packages locally for your IDE.
+
 Run `docker-compose up`.
 
-Visit `localhost:8080`.
+Visit http://localhost:8080.
