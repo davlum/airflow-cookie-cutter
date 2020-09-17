@@ -1,0 +1,30 @@
+version: '3'
+services:
+  airflowdb:
+    image: postgres:9.6
+    environment:
+      - POSTGRES_USER=airflow
+      - POSTGRES_PASSWORD=airflow
+      - POSTGRES_DB=airflow
+  webserver:
+    image: puckel/docker-airflow:1.10.9
+    restart: always
+    env_file:
+      - airflow.env
+    depends_on:
+      - airflowdb
+    volumes:
+      - ./:/usr/local/airflow/
+    ports:
+      - "8080:8080"
+    command: webserver
+  scheduler:
+    image: puckel/docker-airflow:1.10.9
+    restart: always
+    depends_on:
+      - airflowdb
+    env_file:
+      - airflow.env
+    volumes:
+      - ./:/usr/local/airflow
+    command: scheduler
