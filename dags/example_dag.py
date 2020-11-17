@@ -12,7 +12,7 @@ DEFAULT_ARGS = {
 
 
 dag = DAG(
-    'example_dag',
+    dag_id='example_dag',
     default_args=DEFAULT_ARGS,
     schedule_interval='@hourly',
     start_date=datetime(2020, 9, 1),
