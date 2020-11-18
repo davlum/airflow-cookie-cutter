@@ -1,30 +1,36 @@
 version: '3'
 services:
   airflowdb:
-    image: postgres:9.6
+    image: postgres:11.10
     environment:
       - POSTGRES_USER=airflow
       - POSTGRES_PASSWORD=airflow
       - POSTGRES_DB=airflow
+    volumes:
+      - ./airflow_pg_data:/var/lib/postgresql/data
   webserver:
-    image: puckel/docker-airflow:1.10.9
+    image: apache/airflow:1.10.12-python3.7
     restart: always
+    entrypoint: /usr/bin/entrypoint
     env_file:
       - airflow.env
     depends_on:
       - airflowdb
     volumes:
-      - ./:/usr/local/airflow/
+      - ./:/opt/airflow/
+      - ./entrypoint:/usr/bin/entrypoint
     ports:
       - "8080:8080"
     command: webserver
   scheduler:
-    image: puckel/docker-airflow:1.10.9
+    image: apache/airflow:1.10.12-python3.7
     restart: always
+    entrypoint: /usr/bin/entrypoint
     depends_on:
       - airflowdb
     env_file:
       - airflow.env
     volumes:
-      - ./:/usr/local/airflow
+      - ./:/opt/airflow
+      - ./entrypoint:/usr/bin/entrypoint
     command: scheduler

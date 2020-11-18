@@ -1,0 +1,20 @@
+#!/usr/bin/env bash
+set -o errexit -o nounset -o pipefail
+
+sleep 20 # Give time for the database to come up
+
+case "$1" in
+  webserver)
+    # Give the scheduler time to run initdb.
+    sleep 10
+    exec airflow webserver
+    ;;
+  scheduler)
+    airflow initdb
+    exec airflow scheduler
+    ;;
+  *)
+    # The command is something like bash, not an airflow subcommand. Just run it in the right environment.
+    exec "$@"
+    ;;
+esac

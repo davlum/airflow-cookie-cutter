@@ -1,3 +1,7 @@
 logs/
 unittests.cfg
 airflow-webserver.pid
+.local
+.cache
+.python_history
+airflow_pg_data

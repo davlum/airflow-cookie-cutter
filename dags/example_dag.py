@@ -16,6 +16,7 @@ dag = DAG(
     default_args=DEFAULT_ARGS,
     schedule_interval='@hourly',
     start_date=datetime(2020, 9, 1),
+    end_date=datetime(2020, 9, 1, 15),
     max_active_runs=3,
 )
 
