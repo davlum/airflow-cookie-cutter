@@ -34,3 +34,14 @@ services:
       - ./:/opt/airflow
       - ./entrypoint:/usr/bin/entrypoint
     command: scheduler
+  s3:
+    image: motoserver/moto:latest
+    command: ["s3", "-p2000"]
+  postgres:
+    image: postgres:11.10
+    environment:
+      - POSTGRES_USER=user
+      - POSTGRES_PASSWORD=password
+      - POSTGRES_DB=db
+    volumes:
+      - ./fixture.sql:/docker-entrypoint-initdb.d/fixture.sql
