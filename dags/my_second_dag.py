@@ -2,7 +2,6 @@ from datetime import datetime
 from airflow import DAG
 from airflow.operators.python_operator import PythonOperator
 from airflow.hooks.postgres_hook import PostgresHook
-from airflow.hooks.S3_hook import S3Hook
 from util.funcs import extract_from_postgres_to_s3
 
 dag = DAG(
@@ -19,6 +18,5 @@ PythonOperator(
     op_kwargs={
         'exec_date': '{{ ds }}',
         'pg_hook': PostgresHook('postgres_conn'),
-        's3_hook': S3Hook('s3_conn'),
     },
 )
